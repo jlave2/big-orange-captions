@@ -38,9 +38,8 @@ app.post('/upload', (req, res) => {
 
 		cmd.on('close', function(code) {
 			console.log(code)
-			let caption = JSON.parse(fs.readFileSync('./caption.json', 'utf8')).caption
-			console.log(caption)
-			res.end()
+			let caption = JSON.parse(fs.readFileSync('./caption.json', 'utf8'))[0]
+			res.send(caption)
 		})
 
 	})

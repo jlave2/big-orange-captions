@@ -24,7 +24,7 @@ function uploadImage(data) {
 	$.post('/upload', {
 		img: data
 	}, function(res) {
-
+		$('#caption-box').text(res.caption)
 	})
 }
 
