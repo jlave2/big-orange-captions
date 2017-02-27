@@ -37,7 +37,7 @@ app.post('/upload', (req, res) => {
 		if (err) throw err
 		console.log('running script')
 		
-		let sh = child_process.spawn('sh' ['/run.sh'])
+		let sh = child_process.spawn('sh', ['/run.sh'])
 		
 		sh.stdout.on('data', function(chunk) {
 			console.log(chunk.toString())
