@@ -64,6 +64,8 @@ $('#upload').click(function() {
 			$('#upload').prop('disabled', false)
 				.html('<i class="fa fa-upload"></i>')
 			$('#trump-face').removeClass('shaking')
+			$('#hidden-input').reset()
+			$('#file-name').val('')
 		})
 	})
 })
