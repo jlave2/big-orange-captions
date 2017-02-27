@@ -68,7 +68,7 @@ $('#upload').click(function() {
 			$('#red-trump-face').removeClass('shaking')
 			$('#trump-face').removeClass('shaking')
 				.fadeIn(500)
-			$('#hidden-input').reset()
+			$('#hidden-input').val('')
 			$('#file-name').val('')
 		})
 	})

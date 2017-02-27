@@ -3,7 +3,6 @@ var compression = require('compression')
 var bodyParser = require('body-parser')
 var sass = require('node-sass-middleware')
 var child_process = require('child_process')
-//var PythonShell = require('python-shell')
 var fs = require('fs')
 
 var app = module.exports = express()
@@ -39,17 +38,17 @@ app.post('/upload', (req, res) => {
 		fs.unlinkSync(uploadPath)
 	}
 
-	fs.writeFile('./upload/upload.jpg', base64Data, 'base64', function(err) {
+	fs.writeFile('./upload/upload.jpg', base64Data, 'base64', (err) => {
 		if (err) throw err
 		console.log('running script')
 		
 		let sh = child_process.spawn('sh', ['/run.sh'])
 		
-		sh.stdout.on('data', function(chunk) {
+		sh.stdout.on('data', (chunk) => {
 			console.log(chunk.toString())
 		})
 
-		sh.on('close', function(code) {
+		sh.on('close', (code) => {
 			console.log(code)
 
 			let caption = JSON.parse(fs.readFileSync('./caption.json', 'utf8'))[0].caption
@@ -62,7 +61,7 @@ app.post('/upload', (req, res) => {
 			pythonCmd += '-n=50 ' 
 			pythonCmd += '--prime="' + caption + '"'
 
-			child_process.exec(pythonCmd, function(err, stdout) {
+			child_process.exec(pythonCmd, (err, stdout) => {
 				if (err) throw err
 				res.send(stdout)
 			})
