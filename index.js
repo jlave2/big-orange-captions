@@ -3,6 +3,7 @@ var compression = require('compression')
 var bodyParser = require('body-parser')
 var sass = require('node-sass-middleware')
 var spawn = require('child_process').spawn
+var fs = require('fs')
 
 var app = module.exports = express()
 
@@ -37,11 +38,11 @@ app.post('/upload', (req, res) => {
 
 		cmd.on('close', function(code) {
 			console.log(code)
+			let caption = JSON.parse(fs.readFileSync('./caption.json', 'utf8')).caption
+			console.log(caption)
 			res.end()
 		})
-		//exec(cmd, function(error, stdout, stderr) {
-		//	console.log(stdout)
-		//})
+
 	})
 })
 
