@@ -2,8 +2,8 @@ var express = require('express')
 var compression = require('compression')
 var bodyParser = require('body-parser')
 var sass = require('node-sass-middleware')
-var cmd = require('node-cmd')
-var PythonShell = require('python-shell')
+var child_process = require('child_process')
+//var PythonShell = require('python-shell')
 var fs = require('fs')
 
 var app = module.exports = express()
@@ -37,38 +37,28 @@ app.post('/upload', (req, res) => {
 		if (err) throw err
 		console.log('running script')
 		
-		cmd.get('sh /run.sh', function(data) {
-			console.log(data)
-			let caption = JSON.parse(fs.readFileSync('./caption.json', 'utf8'))[0].caption
-			caption = capitalizeFirstLetter(caption)
-			caption += '.'
-			res.send(caption)
-		})
-
-/*		cmd.stdout.on('data', function(chunk) {
+		let sh = child_process.spawn('sh' ['/run.sh'])
+		
+		sh.stdout.on('data', function(chunk) {
 			console.log(chunk.toString())
 		})
 
-		cmd.on('close', function(code) {
+		sh.on('close', function(code) {
 			console.log(code)
-			let caption = 'That\'s'
-			caption += JSON.parse(fs.readFileSync('./caption.json', 'utf8'))[0]
+
+			let caption = JSON.parse(fs.readFileSync('./caption.json', 'utf8'))[0].caption
+			caption = capitalizeFirstLetter(caption)
 			caption += '.'
 
-			var options = {
-				mode: 'text',
-				pythonPath: '/root/tensorflow/bin',
-				scriptPath: '/opt/neural-networks/word-rnn-tensorflow',
-				args: ['-n=100', '--prime="' + caption + '"']
-			}
-			
-			PythonShell.run('sample.py', options, function (err, results) {
-				if (err) throw err
-				// results is an array consisting of messages collected during execution 
-				res.send(results)
-			})
-		})*/
+			let pythonCmd = '/root/tensorflow/bin/python3 '
+			pythonCmd += '/opt/neural-networks/word-rnn-tensorflow/sample.py '
+			pythonCmd += '-n=50 --prime="' + caption + '"'
 
+			child_process.exec(pythonCmd, function(err, stdout) {
+				if (err) throw err
+				res.send(stdout)
+			})
+		})
 	})
 })
 
