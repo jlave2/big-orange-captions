@@ -51,6 +51,10 @@ app.post('/upload', (req, res) => {
 		sh.on('close', (code) => {
 			console.log(code)
 
+			while (!fs.existsSync('./caption.json')) {
+				setTimeout(() => {}, 1000)
+			}
+
 			let caption = JSON.parse(fs.readFileSync('./caption.json', 'utf8'))[0].caption
 			caption = capitalizeFirstLetter(caption)
 			caption += '.'
