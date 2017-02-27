@@ -2,8 +2,8 @@ var express = require('express')
 var compression = require('compression')
 var bodyParser = require('body-parser')
 var sass = require('node-sass-middleware')
-var PythonShell = require('python-shell')
 var spawn = require('child_process').spawn
+var PythonShell = require('python-shell')
 var fs = require('fs')
 
 var app = module.exports = express()
@@ -28,6 +28,7 @@ app.get('/', (req, res) => {
 
 app.post('/upload', (req, res) => {
 	var base64Data = req.body.img.replace(/^data:image\/jpeg;base64,/, '')
+	fs.unlinkSync('./upload/upload.jpg')
 	require('fs').writeFile('./upload/upload.jpg', base64Data, 'base64', function(err) {
 		if (err) throw err
 		console.log('running script')
@@ -37,7 +38,8 @@ app.post('/upload', (req, res) => {
 			console.log(chunk.toString())
 		})
 
-		cmd.on('close', function() {
+		cmd.on('close', function(code) {
+			console.log(code)
 			let caption = 'That\'s'
 			caption += JSON.parse(fs.readFileSync('./caption.json', 'utf8'))[0]
 			caption += '.'
