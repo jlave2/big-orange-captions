@@ -2,7 +2,7 @@ var express = require('express')
 var compression = require('compression')
 var bodyParser = require('body-parser')
 var sass = require('node-sass-middleware')
-var spawn = require('child_process').spawn
+var cmd = require('node-cmd')
 var PythonShell = require('python-shell')
 var fs = require('fs')
 
@@ -32,9 +32,14 @@ app.post('/upload', (req, res) => {
 	require('fs').writeFile('./upload/upload.jpg', base64Data, 'base64', function(err) {
 		if (err) throw err
 		console.log('running script')
-		var cmd = spawn('sh', ['/run.sh'])
+		
+		cmd.get('sh /run.sh', function(data) {
+			console.log(data)
+			let caption = JSON.parse(fs.readFileSync('./caption.json', 'utf8'))[0] + '.'
+			res.send(caption)
+		})
 
-		cmd.stdout.on('data', function(chunk) {
+/*		cmd.stdout.on('data', function(chunk) {
 			console.log(chunk.toString())
 		})
 
@@ -56,7 +61,7 @@ app.post('/upload', (req, res) => {
 				// results is an array consisting of messages collected during execution 
 				res.send(results)
 			})
-		})
+		})*/
 
 	})
 })
