@@ -46,7 +46,6 @@ app.post('/upload', (req, res) => {
 
 			var options = {
 				mode: 'text',
-				pythonPath: '/root/tensorflow/bin',
 				scriptPath: '/opt/neural-networks/word-rnn-tensorflow',
 				args: ['-n=100', '--prime=' + caption]
 			}
