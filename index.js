@@ -31,9 +31,15 @@ function capitalizeFirstLetter(string) {
 }
 
 app.post('/upload', (req, res) => {
-	var base64Data = req.body.img.replace(/^data:image\/jpeg;base64,/, '')
-	fs.unlinkSync('./upload/upload.jpg')
-	require('fs').writeFile('./upload/upload.jpg', base64Data, 'base64', function(err) {
+	let base64Data = req.body.img.replace(/^data:image\/jpeg;base64,/, '')
+	
+	let uploadPath = './upload/upload.jpg'
+
+	if (fs.existsSync(uploadPath)) {
+		fs.unlinkSync(uploadPath)
+	}
+
+	fs.writeFile('./upload/upload.jpg', base64Data, 'base64', function(err) {
 		if (err) throw err
 		console.log('running script')
 		
