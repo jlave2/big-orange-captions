@@ -26,6 +26,10 @@ app.get('/', (req, res) => {
 	res.render('index')
 })
 
+function capitalizeFirstLetter(string) {
+	return string.charAt(0).toUpperCase() + string.slice(1)
+}
+
 app.post('/upload', (req, res) => {
 	var base64Data = req.body.img.replace(/^data:image\/jpeg;base64,/, '')
 	fs.unlinkSync('./upload/upload.jpg')
@@ -35,7 +39,9 @@ app.post('/upload', (req, res) => {
 		
 		cmd.get('sh /run.sh', function(data) {
 			console.log(data)
-			let caption = JSON.parse(fs.readFileSync('./caption.json', 'utf8'))[0] + '.'
+			let caption = JSON.parse(fs.readFileSync('./caption.json', 'utf8'))[0].caption
+			caption = capitalizeFirstLetter(caption)
+			caption += '.'
 			res.send(caption)
 		})
 
