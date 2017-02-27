@@ -42,13 +42,13 @@ app.post('/upload', (req, res) => {
 		if (err) throw err
 		console.log('running script')
 		
-		let sh = child_process.spawn('sh', ['/run.sh'])
+		let bash = child_process.spawn('babash', ['/run.bash'])
 		
-		sh.stdout.on('data', (chunk) => {
+		bash.stdout.on('data', (chunk) => {
 			console.log(chunk.toString())
 		})
 
-		sh.on('close', (code) => {
+		bash.on('close', (code) => {
 			console.log(code)
 
 			while (!fs.existsSync('./caption.json')) {
