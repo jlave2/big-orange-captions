@@ -58,7 +58,9 @@ app.post('/upload', (req, res) => {
 
 			let pythonCmd = '/root/tensorflow/bin/python3 '
 			pythonCmd += '/opt/neural-networks/word-rnn-tensorflow/sample.py '
-			pythonCmd += '-n=50 --prime="' + caption + '"'
+			pythonCmd += '--save_dir="/opt/neural-networks/word-rnn-tensorflow/save" '
+			pythonCmd += '-n=50 ' 
+			pythonCmd += '--prime="' + caption + '"'
 
 			child_process.exec(pythonCmd, function(err, stdout) {
 				if (err) throw err
