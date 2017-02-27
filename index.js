@@ -31,12 +31,6 @@ function capitalizeFirstLetter(string) {
 
 app.post('/upload', (req, res) => {
 	let base64Data = req.body.img.replace(/^data:image\/jpeg;base64,/, '')
-	
-	let uploadPath = './upload/upload.jpg'
-
-	if (fs.existsSync(uploadPath)) {
-		fs.unlinkSync(uploadPath)
-	}
 
 	fs.writeFile('./upload/upload.jpg', base64Data, 'base64', (err) => {
 		if (err) throw err
@@ -44,7 +38,7 @@ app.post('/upload', (req, res) => {
 		
 		child_process.exec('bash /run.sh', (err) => {
 			if (err) throw err
-			
+
 			let caption = JSON.parse(fs.readFileSync('./caption.json', 'utf8'))[0].caption
 			caption = capitalizeFirstLetter(caption)
 			caption += '.'
