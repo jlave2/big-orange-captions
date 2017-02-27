@@ -57,13 +57,17 @@ $('#hidden-input').change(function() {
 $('#upload').click(function() {
 	$('#upload').prop('disabled', true)
 		.html('<i class="fa fa-spinner fa-spin"></i>')
+	$('#red-trump-face').addClass('shaking')
 	$('#trump-face').addClass('shaking')
+		.fadeOut(5000)
 	getBase64($('#hidden-input').prop('files')[0], function(base64) {
 		uploadImage(base64, function(res) {
 			$('#caption-box').text(res.caption)
 			$('#upload').prop('disabled', false)
 				.html('<i class="fa fa-upload"></i>')
+			$('#red-trump-face').removeClass('shaking')
 			$('#trump-face').removeClass('shaking')
+				.fadeIn(500)
 			$('#hidden-input').reset()
 			$('#file-name').val('')
 		})
