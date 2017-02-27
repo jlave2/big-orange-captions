@@ -2,8 +2,7 @@ var express = require('express')
 var compression = require('compression')
 var bodyParser = require('body-parser')
 var sass = require('node-sass-middleware')
-var exec = require('child_process').exec
-var cmd = 'sh /run.sh'
+var spawn = require('child_process').spawn
 
 var app = module.exports = express()
 
@@ -29,9 +28,20 @@ app.post('/upload', (req, res) => {
 	var base64Data = req.body.img.replace(/^data:image\/jpeg;base64,/, '')
 	require('fs').writeFile('./upload/upload.jpg', base64Data, 'base64', function(err) {
 		if (err) console.log(err)
-		exec(cmd, function(error, stdout, stderr) {
-			console.log(stdout)
+		console.log('running script')
+		var cmd = spawn('sh', ['/run.sh'])
+
+		cmd.stdout.on('data', function(chunk) {
+			console.log(chunk.toString())
 		})
+
+		cmd.on('close', function(code) {
+			console.log(code)
+			res.end()
+		})
+		//exec(cmd, function(error, stdout, stderr) {
+		//	console.log(stdout)
+		//})
 	})
 })
 
