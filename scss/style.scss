@@ -1,0 +1,85 @@
+nav {
+	margin-bottom: 2rem;
+}
+
+.nav-title {
+	color: orange;
+	display: none;
+	font-size: 2rem;
+	font-weight: 700;
+	margin-left: 1rem;
+	text-transform: uppercase;
+	@media (min-width: 500px) {
+		display: initial;
+	}
+}
+
+#caption-box {
+	background-color: #ddd;
+	border-radius: 0.5em;
+	padding: 1rem;
+}
+
+form {
+	display: flex;
+
+	.input-group {
+		width: 100%;
+
+		@media (min-width: 420px) {
+			margin-right: 0.5rem;
+			width: auto;
+
+			flex-grow: 3;
+		}
+	}
+
+	button {
+		margin-top: 0.5rem;
+		width: 100%;
+
+		@media (min-width: 420px) {
+			margin-top: 0;
+			width: auto;
+		}
+	}
+}
+
+.btn-primary {
+	cursor: pointer;
+}
+
+#hidden-input {
+	height: 0;
+	width: 0;
+}
+
+.hidden {
+	display: none;
+}
+
+.nav-link {
+	cursor: pointer;
+}
+
+
+.button-container {
+	display: flex;
+
+	flex-wrap: wrap;
+	justify-content: center;
+
+	button {
+		margin-top: 0.5rem;
+		width: 100%;
+
+
+
+		@media (min-width: 420px) {
+			margin-top: 0;
+
+			flex: 1;
+		}
+	}
+}
+

@@ -1,0 +1,44 @@
+doctype html
+html
+	head
+		meta(charset='utf-8')
+		meta(name='viewport' content='width=device-width, initial-scale=1.0')
+		title Huge Orange Captions
+		link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css')
+		link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.min.css')
+		link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css')
+		link(rel='stylesheet' href='/css/style.css')
+	body(lang='en')
+
+		<nav class='navbar navbar-light bg-faded'>
+			<a class='navbar-brand' href='#'>
+				<img class='d-inline-block align-top' src='/img/hair.png' width='50' height='50' alt=''>
+				<span class='nav-title'>Huge Orange Captions</span>
+			</a>
+		</nav>
+
+		.container
+			.row
+				.col-xs-12.col-sm-8
+					.card-block.text-center
+						#spinner.hidden
+							i.fa.fa-spinner.fa-spin.fa-3x
+						#form
+							p.card-text.text-center Upload an image in JPG format.
+							form.form-inline
+								#file-group.input-group
+									#browse.input-group-addon.btn-primary: i.fa.fa-folder-open
+									input#hidden-input(name='imageFile' type='file' accept='image/jpeg')
+									input#file-name.form-control(type='text' readonly)
+								button#upload.btn.btn-primary(type='button' disabled): i.fa.fa-upload
+					.card-block.text-center
+							#preview-box
+								img#preview(src='/img/hair.png')
+				.col-xs-12.col-sm-4
+					#caption-box
+						|This is placeholder text.
+					#trump
+						img(src='/img/trump.png')
+
+		script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js')
+		script(src='/js/interaction.js')

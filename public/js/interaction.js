@@ -1,0 +1,61 @@
+function getBase64(file, _callback) {
+	var reader = new FileReader()
+	reader.readAsDataURL(file)
+	reader.onload = function () {
+		_callback(reader.result)
+	}
+	reader.onerror = function (error) {
+		console.log('Error: ', error)
+	}
+}
+
+function readURL(input) {
+	if (input.files && input.files[0]) {
+		var reader = new FileReader()
+		reader.onload = function (e) {
+			$('#preview').css('width', '100%')
+				.attr('src', e.target.result)
+		}
+		reader.readAsDataURL(input.files[0])
+	}
+}
+
+function uploadImage(data) {
+	$.post('/upload', {
+		img: data
+	}, function(res) {
+
+	})
+}
+
+$('#browse').click(function() {
+	$('#hidden-input').click()
+})
+
+// on file selection
+$('#hidden-input').change(function() {
+	readURL(this)
+	// insert filename into input box
+	$('#file-name').val($('#hidden-input').val())
+
+	// if right file type
+	if ($('#file-name').val().match(/[.](jpg|JPG)$/g)) {
+		$('#file-group').addClass('has-success')
+		$('#file-name').addClass('form-control-success')
+		$('#file-group').removeClass('has-danger')
+		$('#file-name').removeClass('form-control-danger')
+		$('#upload').prop('disabled', false)
+	} else {
+		$('#file-group').addClass('has-danger')
+		$('#file-name').addClass('form-control-danger')
+		$('#file-group').removeClass('has-success')
+		$('#file-name').removeClass('form-control-success')
+		$('#upload').prop('disabled', true)
+	}
+})
+
+$('#upload').click(function() {
+	getBase64($('#hidden-input').prop('files')[0], function(base64) {
+		uploadImage(base64)
+	})
+})
