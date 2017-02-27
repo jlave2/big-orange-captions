@@ -42,19 +42,9 @@ app.post('/upload', (req, res) => {
 		if (err) throw err
 		console.log('running script')
 		
-		let bash = child_process.spawn('bash', ['/run.sh'])
-		
-		bash.stdout.on('data', (chunk) => {
-			console.log(chunk.toString())
-		})
-
-		bash.on('close', (code) => {
-			console.log(code)
-
-			while (!fs.existsSync('./caption.json')) {
-				setTimeout(() => {}, 1000)
-			}
-
+		child_process.exec('bash /run.sh', (err) => {
+			if (err) throw err
+			
 			let caption = JSON.parse(fs.readFileSync('./caption.json', 'utf8'))[0].caption
 			caption = capitalizeFirstLetter(caption)
 			caption += '.'
