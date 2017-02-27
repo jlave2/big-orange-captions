@@ -2,6 +2,7 @@ var express = require('express')
 var compression = require('compression')
 var bodyParser = require('body-parser')
 var sass = require('node-sass-middleware')
+var PythonShell = require('python-shell')
 var spawn = require('child_process').spawn
 var fs = require('fs')
 
@@ -28,7 +29,7 @@ app.get('/', (req, res) => {
 app.post('/upload', (req, res) => {
 	var base64Data = req.body.img.replace(/^data:image\/jpeg;base64,/, '')
 	require('fs').writeFile('./upload/upload.jpg', base64Data, 'base64', function(err) {
-		if (err) console.log(err)
+		if (err) throw err
 		console.log('running script')
 		var cmd = spawn('sh', ['/run.sh'])
 
@@ -36,10 +37,23 @@ app.post('/upload', (req, res) => {
 			console.log(chunk.toString())
 		})
 
-		cmd.on('close', function(code) {
-			console.log(code)
-			let caption = JSON.parse(fs.readFileSync('./caption.json', 'utf8'))[0]
-			res.send(caption)
+		cmd.on('close', function() {
+			let caption = 'That\'s'
+			caption += JSON.parse(fs.readFileSync('./caption.json', 'utf8'))[0]
+			caption += '.'
+
+			var options = {
+				mode: 'text',
+				pythonPath: '/root/tensorflow/bin',
+				scriptPath: '/opt/neural-networks/word-rnn-tensorflow',
+				args: ['-n=100', '--prime=' + caption]
+			}
+			
+			PythonShell.run('sample.py', options, function (err, results) {
+				if (err) throw err
+				// results is an array consisting of messages collected during execution 
+				res.send(results)
+			})
 		})
 
 	})

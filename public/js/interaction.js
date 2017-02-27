@@ -62,7 +62,7 @@ $('#upload').click(function() {
 		.fadeOut(5000)
 	getBase64($('#hidden-input').prop('files')[0], function(base64) {
 		uploadImage(base64, function(res) {
-			$('#caption-box').text(res.caption)
+			$('#caption-box').text(res)
 			$('#upload').prop('disabled', false)
 				.html('<i class="fa fa-upload"></i>')
 			$('#red-trump-face').removeClass('shaking')
