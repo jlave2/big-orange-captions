@@ -39,7 +39,7 @@ app.post('/upload', (req, res) => {
 		child_process.execFileSync('bash', ['/run.sh'])
 
 		console.log('Done. Getting caption...')
-		
+
 		let caption = JSON.parse(fs.readFileSync('./caption.json', 'utf8'))[0].caption
 		caption = capitalizeFirstLetter(caption)
 		caption += '.'
@@ -50,9 +50,11 @@ app.post('/upload', (req, res) => {
 		pythonCmd += '-n=50 '
 		pythonCmd += '--prime="' + caption + '"'
 
-		child_process.exec(pythonCmd, (err, stdout) => {
+		child_process.exec(pythonCmd, (err, caption) => {
 			if (err) throw err
-			res.send(stdout)
+			caption.replace(/(^[^\.]+\.\s)([^\.]+\.\s)(.+)/g, (match, p1, p2, p3) => p1 + p3)
+				.replace(/[^\.]+$/g, '')
+			res.send(caption)
 		})
 	})
 })
