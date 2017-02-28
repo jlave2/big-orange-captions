@@ -1,5 +1,5 @@
 # HUGE ORANGE CAPTIONS
-Uses machine learning to generate rambling nonsense about arbitrary pictures
+Use machine learning to generate rambling nonsense about arbitrary pictures.
 
 ## Behind the scenes
 Huge Orange Captions is based on two pre-existing deep-learning libraries:
