@@ -52,9 +52,9 @@ app.post('/upload', (req, res) => {
 
 		child_process.exec(pythonCmd, (err, caption) => {
 			if (err) throw err
-			caption.replace(/(^[^\.]+\.\s)([^\.]+\.\s)(.+)/g, (match, p1, p2, p3) => p1 + p3)
+			let cleanedCaption = caption.replace(/(^[^\.]+\.\s)([^\.]+\.\s)(.+)/g, (match, p1, p2, p3) => p1 + p3)
 				.replace(/[^\.]+$/g, '')
-			res.send(caption)
+			res.send(cleanedCaption)
 		})
 	})
 })
