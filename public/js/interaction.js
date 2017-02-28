@@ -55,11 +55,12 @@ $('#hidden-input').change(function() {
 })
 
 $('#upload').click(function() {
+	$('#caption-box').html('[raging intensifies]')
 	$('#upload').prop('disabled', true)
 		.html('<i class="fa fa-spinner fa-spin"></i>')
 	$('#red-trump-face').addClass('shaking')
 	$('#trump-face').addClass('shaking')
-		.fadeOut(5000)
+		.fadeOut(8000)
 	getBase64($('#hidden-input').prop('files')[0], function(base64) {
 		uploadImage(base64, function(res) {
 			$('#caption-box').text(res)
@@ -67,7 +68,7 @@ $('#upload').click(function() {
 				.html('<i class="fa fa-upload"></i>')
 			$('#red-trump-face').removeClass('shaking')
 			$('#trump-face').removeClass('shaking')
-				.fadeIn(500)
+				.fadeIn(1000)
 			$('#hidden-input').val('')
 			$('#file-name').val('')
 		})

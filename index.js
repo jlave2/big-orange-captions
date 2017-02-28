@@ -35,9 +35,11 @@ app.post('/upload', (req, res) => {
 	fs.writeFile('./upload/upload.jpg', base64Data, 'base64', (err) => {
 		if (err) throw err
 		console.log('Running script...')
-		
+
 		child_process.execFileSync('bash', ['/run.sh'])
+
 		console.log('Done. Getting caption...')
+		
 		let caption = JSON.parse(fs.readFileSync('./caption.json', 'utf8'))[0].caption
 		caption = capitalizeFirstLetter(caption)
 		caption += '.'
@@ -45,7 +47,7 @@ app.post('/upload', (req, res) => {
 		let pythonCmd = '/root/tensorflow/bin/python3 '
 		pythonCmd += '/opt/neural-networks/word-rnn-tensorflow/sample.py '
 		pythonCmd += '--save_dir="/opt/neural-networks/word-rnn-tensorflow/save" '
-		pythonCmd += '-n=50 ' 
+		pythonCmd += '-n=50 '
 		pythonCmd += '--prime="' + caption + '"'
 
 		child_process.exec(pythonCmd, (err, stdout) => {
