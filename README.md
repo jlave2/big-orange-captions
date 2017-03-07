@@ -20,4 +20,4 @@ docker pull jlave2/huge-orange-captions
 docker run -dit -p 4000:4000 jlave2/huge-orange-captions
 docker exec jlave2/huge-orange-captions 'cd root/huge-orange-captions && node index.js'
 ```
-The page should then be accessible by visiting `http://localhost:4000` in a browser.
+The page should then be accessible by visiting `http://localhost:4000` in a browser. I ran into trouble hosting the app on a server with 1GB of RAM, so ensure you have at least 4GB.
