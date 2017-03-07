@@ -18,5 +18,6 @@ Ensure you have [docker](https://www.docker.com/) installed, then run
 ```
 docker pull jlave2/huge-orange-captions
 docker run -dit -p 4000:4000 jlave2/huge-orange-captions
-docker exec -it jlave2/huge-orange-captions 'cd root/huge-orange-captions && node index.js'
+docker exec jlave2/huge-orange-captions 'cd root/huge-orange-captions && node index.js'
 ```
+The page should then be accessible by visiting `http://localhost:4000` in a browser.
