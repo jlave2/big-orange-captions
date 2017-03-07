@@ -14,7 +14,7 @@ Also used was
 * [docker-neuraltalk2](https://github.com/SaMnCo/docker-neuraltalk2), a Docker container which simplifies obtaining all the dependencies necessary for neuraltalk2
 
 ## You can host it!
-Ensure you have [docker]() installed, then run
+Ensure you have [docker](https://www.docker.com/) installed, then run
 ```
 docker pull jlave2/huge-orange-captions
 docker run -dit -p 4000:4000 jlave2/huge-orange-captions
